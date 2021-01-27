@@ -4,6 +4,7 @@ from django.core.mail import send_mail
 from django.views.generic import View
 from django.http import HttpResponse
 from django.conf import settings
+from django.contrib.auth import authenticate, login
 
 from user.models import User
 from celery_tasks.tasks import send_register_active_email
@@ -174,3 +175,30 @@ class LoginView(View):
     def get(self, request):
         '''显示登陆页面'''
         return render(request, 'login.html')
+
+    def post(self, request):
+        '''登录校验'''
+        #接受数据
+        username = request.POST.get('username')
+        password = request.POST.get('pwd')
+
+        #校验数据
+        if not all([username, password]):
+            return render(request, 'login.html', {'errmsg':'数据不完整'})
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            #用户名密码正确
+            if user.is_active:
+                #用户已激活
+                #记录用户登录状态
+                login(request, user)
+
+                #跳转到首页
+                return redirect(reverse('goods:index'))
+            else:
+                #用户未激活
+                return render(request, 'login.html', {'errmsg':'账户未激活'})
+        else:
+            # the authentication system was unable to verify the username and password
+            return render(request, 'login.html', {'errmsg':'用户名或密码错误'})

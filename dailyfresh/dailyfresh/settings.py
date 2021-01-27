@@ -138,3 +138,18 @@ EMAIL_HOST_USER = '909440898@qq.com'
 # 自己的邮箱授权码，非密码
 EMAIL_HOST_PASSWORD = 'anciyzarwskkbbia'
 EMAIL_FROM = '天天生鲜<909440898@qq.com>'
+
+#Django缓存配置
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+#配置session存储
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'default'
