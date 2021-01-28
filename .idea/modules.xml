@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/sz20.iml" filepath="$PROJECT_DIR$/.idea/sz20.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/dailyfresh.iml" filepath="$PROJECT_DIR$/.idea/dailyfresh.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../jd_seckill-master/.idea/jd_seckill-master.iml" filepath="$PROJECT_DIR$/../../jd_seckill-master/.idea/jd_seckill-master.iml" />
     </modules>
   </component>
 </project>
