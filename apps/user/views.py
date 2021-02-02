@@ -12,6 +12,7 @@ from itsdangerous import SignatureExpired
 from utils.mixin import LoginRequiredMixin
 import re
 
+#0202 修改
 
 # /user/register
 def register(request):
