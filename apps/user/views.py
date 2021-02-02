@@ -246,7 +246,7 @@ class UserInfoView(LoginRequiredMixin, View):
         user = request.user
         address = Address.objects.get_default_address(user)
 
-        #获取用户的历史浏览记录
+        #获取用户的历史浏览记录1
         # 获取用户的最近浏览
         return render(request, 'user_center_info.html', {'page':'user', 'address': address})
 
