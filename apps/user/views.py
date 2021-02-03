@@ -4,8 +4,10 @@ from django.views.generic import View
 from django.http import HttpResponse
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
+from django_redis import get_redis_connection
 
 from user.models import User, Address
+from goods.models import GoodsSKU
 from celery_tasks.tasks import send_register_active_email
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import SignatureExpired
@@ -246,9 +248,38 @@ class UserInfoView(LoginRequiredMixin, View):
         user = request.user
         address = Address.objects.get_default_address(user)
 
-        #获取用户的历史浏览记录1
+        #获取用户的历史浏览记录
+        # from redis import StrictRedis
+        # StrictRedis(host='127.0.0.1', port='6379', db=9)
+
+        con = get_redis_connection('default')
+        history_key = 'history_%d'%user.id
+
+        #获取用户最新浏览的5个商品的id
+        sku_ids = con.lrange(history_key, 0, 4)
+
+        #从数据库种查询用户浏览的商品的具体信息
+        # goods_li = GoodsSKU.objects.filter(id__in=sku_ids)
+
+        # goods_res = []
+        # for a_id in sku_ids:
+        #     for goods in goods_li:
+        #         if a_id == goods.id:
+        #             goods_res.append(goods)
+
+        #遍历获取用户浏览的商品信息
+        goods_li = []
+        for id in sku_ids:
+            goods = GoodsSKU.objects.get(id=id)
+            goods_li.append(goods)
+
+        #组织上下文
+        context = {'page':'user',
+                   'address': address,
+                   'goods_li': goods_li}
+
         # 获取用户的最近浏览
-        return render(request, 'user_center_info.html', {'page':'user', 'address': address})
+        return render(request, 'user_center_info.html', context)
 
 # /user/order
 class UserOrderView(LoginRequiredMixin, View):
