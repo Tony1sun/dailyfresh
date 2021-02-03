@@ -20,14 +20,16 @@
 					<ul class="goods_type_list clearfix">
                         {% for goods in goods_li %}
 						<li>
-							<a href="detail.html"><img src="images/goods/goods003.jpg"></a>
-							<h4><a href="detail.html">大兴大棚草莓</a></h4>
+							<a href="detail.html"><img src="">{{ goods.image.url }}</a>
+							<h4><a href="detail.html">{{ goods.name }}</a></h4>
 							<div class="operate">
-								<span class="prize">￥16.80</span>
-								<span class="unit">16.80/500g</span>
+								<span class="prize">{{ goods.price }}</span>
+								<span class="unit">{{ goods.price }}/{{ goods.unite }}</span>
 								<a href="#" class="add_goods" title="加入购物车"></a>
 							</div>
 						</li>
+                        {% empty %}
+                            无历史浏览记录
                         {% endfor %}
 					</ul>
 				</div>
