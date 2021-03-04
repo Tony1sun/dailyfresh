@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': 'dailyfresh',
         'USER': 'root',
         'PASSWORD': '123456',
-        'HOST': 'localhost',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
 
     }
@@ -158,4 +158,4 @@ SESSION_CACHE_ALIAS = 'default'
 LOGIN_URL = '/user/login'
 
 #设置Django文件存储类
-DEFAULT_FILE_STORAGE = 'utils.fdfs.storage.FSFSStorage'
+DEFAULT_FILE_STORAGE = 'utils.fdfs.storage.FDFSStorage'

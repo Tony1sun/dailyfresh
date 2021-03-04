@@ -1,7 +1,7 @@
 from django.core.files.storage import Storage
 from fdfs_client.client import Fdfs_client
 
-class FSFSStorage(Storage):
+class FDFSStorage(Storage):
     '''文件存储类'''
 
     def _open(self, name, mode='rb'):
@@ -33,7 +33,7 @@ class FSFSStorage(Storage):
             raise Exception('上传文件到fast dfs失败！')
 
         #获取返回的文件ID
-        filename = res.get('remote_file_id')
+        filename = res.get('Remote file_id')
 
         return filename
 
