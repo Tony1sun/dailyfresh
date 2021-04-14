@@ -8,10 +8,11 @@
 	<title>{% block title %}{% endblock title %}</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-    {# 网页顶部引入文件块 #}
+	{# 网页顶部引入文件块 #}
     {% block topfiles %}{% endblock topfiles %}
 </head>
 <body>
+{# 网页顶部欢迎信息块 #}
 {% block header_con %}
 	<div class="header_con">
 		<div class="header">
@@ -20,7 +21,7 @@
                 {% if user.is_authenticated %}
 				<div class="login_btn fl">
 					欢迎您：<em>{{ user.username }}</em>
-                <span>|</span>
+                    <span>|</span>
 					<a href="{% url 'user:logout' %}">退出</a>
 				</div>
                 {% else %}
@@ -46,20 +47,20 @@
 {# 网页顶部搜索框块 #}
 {% block search_bar %}
 	<div class="search_bar clearfix">
-		<a href="index.html" class="logo fl"><img src="images/logo.png"></a>
+		<a href="index.html" class="logo fl"><img src="{% static 'images/logo.png' %}"></a>
 		<div class="search_con fl">
 			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
 			<input type="button" class="input_btn fr" name="" value="搜索">
 		</div>
 		<div class="guest_cart fr">
 			<a href="#" class="cart_name fl">我的购物车</a>
-			<div class="goods_count fl" id="show_count">1</div>
+			<div class="goods_count fl" id="show_count">{{ cart_count }}</div>
 		</div>
 	</div>
 {% endblock search_bar %}
 
-{# 网站主题内容块 #}
-{% block body %}{% endblock body%}
+{# 网站主体内容块 #}
+{% block body %}{% endblock body %}
 
 	<div class="footer">
 		<div class="foot_link">
@@ -74,7 +75,7 @@
 		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
 		<p>电话：010-****888    京ICP备*******8号</p>
 	</div>
-    {# 网页底部html块 #}
+    {# 网页底部html元素块 #}
     {% block bottom %}{% endblock bottom %}
     {# 网页底部引入文件块 #}
 	{% block bottomfiles %}{% endblock bottomfiles %}
