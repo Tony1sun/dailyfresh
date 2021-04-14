@@ -1,16 +1,18 @@
 #使用celery
 from django.core.mail import send_mail
 from django.conf import settings
+from django.template import loader, RequestContext
 from celery import Celery
 import time
 
 import os
 import django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dailyfresh.settings")
+django.setup()
+
 from goods.models import GoodsType,IndexGoodsBanner,IndexPromotionBanner,IndexTypeGoodsBanner
 from django_redis import get_redis_connection
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dailyfresh.settings")
-django.setup()
 
 #创建一个Celery类的实例对象
 app = Celery('celery_tasks.tasks', broker='redis://127.0.0.1:6379/8')
@@ -25,9 +27,7 @@ app = Celery('celery_tasks.tasks', broker='redis://127.0.0.1:6379/8')
 # )
 
 #定义任务函数
-# @app.task()
-@app.task(name="apps.celery_tasks.tasks.send_register_active_email")
-# @app.task(name="celery_tasks.tasks.send_register_active_email")
+@app.task
 def send_register_active_email(to_email, username, token):
     '''发送激活邮件'''
     #组织邮件信息
@@ -41,6 +41,7 @@ def send_register_active_email(to_email, username, token):
     send_mail(subject, message, sender, receiver, html_message=html_message)
     time.sleep(5)
 
+@app.task
 def generate_static_index_html():
     '''产生首页静态页面'''
     # 获取商品的种类信息
@@ -71,4 +72,14 @@ def generate_static_index_html():
         }
 
     # 使用模板
-    return render(request, 'index.html', context)
+    #1 加载模板文件，返回模板对象
+    temp = loader.get_template('static_index.html')
+    #2 模板渲染
+    static_index_html = temp.render(context)
+    # print(static_index_html)
+
+    #生成首页对应的静态文件
+    save_path = os.path.join(settings.BASE_DIR, 'static/index.html')
+    # print(save_path)
+    with open(save_path, 'w',  encoding='utf-8') as f:
+        f.write(static_index_html)
