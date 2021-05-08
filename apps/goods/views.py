@@ -41,9 +41,10 @@ class IndexView(View):
             context = {'types': types,
                        'goods_banners': goods_banners,
                        'promotion_banners': promotion_banners}
+
             # 设置缓存
             # key  value timeout
-            cache.set('index_page_data', context, 3600)
+            # cache.set('index_page_data', context, 3600)
 
         # 获取用户购物车中商品的数目
         user = request.user

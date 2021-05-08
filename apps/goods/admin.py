@@ -31,6 +31,7 @@ class IndexTypeGoodsBannerAdmin(BaseModelAdmin):
 class IndexPromotionBannerAdmin(BaseModelAdmin):
     pass
 
+
 admin.site.register(GoodsType, GoodsTypeAdmin)
 admin.site.register(IndexGoodsBanner, IndexGoodsBannerAdmin)
 admin.site.register(IndexTypeGoodsBanner, IndexTypeGoodsBannerAdmin)

@@ -20,6 +20,7 @@
     <orderEntry type="jdk" jdkName="Python 3.5 (sz20_py3)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="jd_seckill-master" />
+    <orderEntry type="module" module-name="apitest" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />

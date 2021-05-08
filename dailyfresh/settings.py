@@ -164,4 +164,4 @@ DEFAULT_FILE_STORAGE = 'utils.fdfs.storage.FDFSStorage'
 FDFS_CLIENT_CONF = './utils/fdfs/client.conf'
 
 #设置fdfs存储服务器上nginx的ip和端口号
-FDFS_URL = 'http://192.168.168.134:8888/'
+FDFS_URL = 'http://172.17.0.2:8888/'
